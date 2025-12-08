@@ -1,110 +1,34 @@
-
--- Définition de structures de données associatives sous forme d'une liste
--- chaînée associative (LCA).
-generic
-	type T_Cle is private;
-	type T_Valeur is private;
-
-package LCA is
+package Routeur is
 
 	type T_LCA is limited private;
 
 	-- Initialiser une Sda.  La Sda est vide.
-	procedure Initialiser(Sda: out T_LCA) with
-		Post => Est_Vide (Sda);
+	procedure Attribuer_Interface (Adresse : T_Adresse, Table_Routage : T_Routage) with
+		Post => ...;
+		Pre => ...;
 
 
-	-- Détruire une Sda.  Elle ne devra plus être utilisée.
-	procedure Detruire (Sda : in out T_LCA);
+	function Longueur_Masque (Adresse: T_Adresse) return Integer
+		Post => ...;
+		Pre => ...;
 
-
-	-- Est-ce qu'une Sda est vide ?
-	function Est_Vide (Sda : in T_LCA) return Boolean;
-
-
-	-- Obtenir le nombre d'éléments d'une Sda. 
-	function Taille (Sda : in T_LCA) return Integer with
-		Post => Taille'Result >= 0
-			and (Taille'Result = 0) = Est_Vide (Sda);
-
-
-	-- Enregistrer une valeur associée à une Clé dans une Sda.
-	-- Si la clé est déjà présente dans la Sda, sa valeur est changée.
-	procedure Enregistrer (Sda : in out T_LCA ; Cle : in T_Cle ; Valeur : in T_Valeur) with
-		Post => Cle_Presente (Sda, Cle) and (La_Valeur (Sda, Cle) = Valeur)   -- valeur insérée
-				and (not (Cle_Presente (Sda, Cle)'Old) or Taille (Sda) = Taille (Sda)'Old)
-				and (Cle_Presente (Sda, Cle)'Old or Taille (Sda) = Taille (Sda)'Old + 1);
-
-	-- Enregistrer une valeur associée à une Clé dans une Sda.
-	-- Si la clé est déjà présente dans la Sda, sa valeur est changée.
-	procedure Enregistrer_Iteratif (Sda : in out T_LCA ; Cle : in T_Cle ; Valeur : in T_Valeur) with
-		Post => Cle_Presente (Sda, Cle) and (La_Valeur (Sda, Cle) = Valeur)   -- valeur insérée
-				and (not (Cle_Presente (Sda, Cle)'Old) or Taille (Sda) = Taille (Sda)'Old)
-				and (Cle_Presente (Sda, Cle)'Old or Taille (Sda) = Taille (Sda)'Old + 1);
-
-	-- Enregistrer une valeur associée à une Clé dans une Sda.
-	-- Si la clé est déjà présente dans la Sda, sa valeur est changée.
-	procedure Enregistrer_Recursif (Sda : in out T_LCA ; Cle : in T_Cle ; Valeur : in T_Valeur) with
-		Post => Cle_Presente (Sda, Cle) and (La_Valeur (Sda, Cle) = Valeur)   -- valeur insérée
-				and (not (Cle_Presente (Sda, Cle)'Old) or Taille (Sda) = Taille (Sda)'Old)
-				and (Cle_Presente (Sda, Cle)'Old or Taille (Sda) = Taille (Sda)'Old + 1);
-
-
-	-- Supprimer la valeur associée à une Clé dans une Sda.
-	-- Exception : Cle_Absente_Error si Clé n'est pas utilisée dans la Sda
-	procedure Supprimer (Sda : in out T_LCA ; Cle : in T_Cle) with
-		Post =>  Taille (Sda) = Taille (Sda)'Old - 1 -- un élément de moins
-			and not Cle_Presente (Sda, Cle);         -- la clé a été supprimée
-
-
-	-- Supprimer la valeur associée à une Clé dans une Sda.
-	-- Exception : Cle_Absente_Error si Clé n'est pas utilisée dans la Sda
-	procedure Supprimer_Iteratif (Sda : in out T_LCA ; Cle : in T_Cle) with
-		Post =>  Taille (Sda) = Taille (Sda)'Old - 1 -- un élément de moins
-			and not Cle_Presente (Sda, Cle);         -- la clé a été supprimée
-
-
-	-- Supprimer la valeur associée à une Clé dans une Sda.
-	-- Exception : Cle_Absente_Error si Clé n'est pas utilisée dans la Sda
-	procedure Supprimer_Recursif (Sda : in out T_LCA ; Cle : in T_Cle) with
-		Post =>  Taille (Sda) = Taille (Sda)'Old - 1 -- un élément de moins
-			and not Cle_Presente (Sda, Cle);         -- la clé a été supprimée
-
-
-	-- Savoir si une Clé est présente dans une Sda.
-	function Cle_Presente (Sda : in T_LCA ; Cle : in T_Cle) return Boolean;
-
-
-	-- Obtenir la valeur associée à une Cle dans la Sda.
-	-- Exception : Cle_Absente_Error si Clé n'est pas utilisée dans l'Sda
-	function La_Valeur (Sda : in T_LCA ; Cle : in T_Cle) return T_Valeur;
-
-
-	-- Appliquer un traitement (Traiter) pour chaque couple d'une Sda.
-	generic
-		with procedure Traiter (Cle : in T_Cle; Valeur: in T_Valeur);
-	procedure Faire_Pour_Chaque (Sda : in T_LCA);
-
-
-	-- Afficher la Sda en révélant sa structure interne.
-	-- Voici un exemple d'affichage.
-	-- -->["un" : 1]-->["deux" : 2]-->["trois" : 3]-->["quatre" : 4]--E
-	generic
-		with procedure Afficher_Cle (Cle : in T_Cle);
-		with procedure Afficher_Donnee (Valeur : in T_Valeur);
-	procedure Afficher_Debug (Sda : in T_LCA);
-
-
+	function Adresse_Identique (Adresse1 : T_Adresse, Adresse2 : T_Adresse) return Condition; 
+		Post => ...;
+		Pre => ...;
+	
+	function Appartenir_Masque (Adresse
 private
-        
-        type T_Cellule;
 
-        type T_LCA is access T_Cellule;
+		type T_IP_Masque is 
+				record 
+						Destination : T_Adresse;
+						Masque : T_Adresse;
+				end record;
+		end T_IP_Masque;
 
-        type T_Cellule is 
-                record 
-                        Valeur : T_Valeur;
-                        Cle : T_Cle;
-                        Suivant : T_LCA;
-                end record; 
+        type T_Routage is new LCA (Valeur = Unbounded_String, Cle = T_IP_Masque);
+
+        type T_Adresse is mod 2 ** 32;
+
+		type Condition is (Condition1, Condition1Bis, Condition2, Aucune);
 end LCA;
