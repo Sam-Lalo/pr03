@@ -6,8 +6,7 @@ package Routeur is
 
 	-- Attribue une interface à partir d'une table de routage, et d'une adresse
 	procedure Attribuer_Interface (Adresse : T_Adresse, Table_Routage : T_Routage) with
-		Post => ...;
-		Pre => ...;
+		Pre => Adresse /= null;
 
 	-- Calcule la longueur du masque, c'est à dire à partir de quel bit est a 0  
 	function Longueur_Masque (Adresse: T_Adresse) return Integer with
