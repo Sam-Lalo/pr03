@@ -43,5 +43,5 @@ private
 
         type T_Adresse is mod 2 ** 32;
 
-		type Condition is (Condition1, Condition1Bis, Condition2, Aucune);
+		type T_Condition is (Condition1, Condition1Bis, Condition2, Aucune);
 end LCA;
