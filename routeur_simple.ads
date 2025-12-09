@@ -10,23 +10,23 @@ package Routeur is
 		Pre => ...;
 
 	-- Calcule la longueur du masque, c'est à dire à partir de quel bit est a 0  
-	function Longueur_Masque (Adresse: T_Adresse) return Integer
+	function Longueur_Masque (Adresse: T_Adresse) return Integer with
 		Post => Result > 0 AND Result <= 32;
 
 	-- Verifie que les deux adresses données sont iddentique, identique à un octet pre ou rien de cela
-	function Adresse_Identique (Adresse1 : T_Adresse, Adresse2 : T_IP_Masque) return Condition; 
+	function Adresse_Identique (Adresse1 : T_Adresse, Adresse2 : T_IP_Masque) return Condition with
 		Post => (Adresse1 = Adresse2.Destination AND Result = Condition1) 
 					OR (Adresse1 != Adresse2.Destination AND Result = Aucune)
 					OR ();
 		Pre => ...;
 
 	-- Vérifie que notre adresse appartient à ce masque réseau
-	function Appartenir_Masque (Adresse : T_Adresse, Masque : T_Adresse) return Condition;
+	function Appartenir_Masque (Adresse : T_Adresse, Masque : T_Adresse) return Condition with
 		Post => ...;
 		Pre => ...;
 
 -- Récupére le dernière octet, la position a laquelle le masque deviens nul  
-	function Recuperation_Derniere_Octet (Masque : T_Adresse, Adresse : T_Adresse) return Integer
+	function Recuperation_Derniere_Octet (Masque : T_Adresse, Adresse : T_Adresse) return Integer with
 		Post => ...;
 		Pre => ...;
 
